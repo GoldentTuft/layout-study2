@@ -1,0 +1,63 @@
+@import 'variables';
+
+.wrapper {
+  border: solid 2px $sub-color2;
+  border-radius: $default-radius;
+}
+
+.menu {
+  background-color: rgb(255, 0, 255);
+
+  &_brand {
+    font-size: 2rem;
+  }
+
+  &_item {
+    background-color: rgb(200, 0, 200);
+    font-size: 1.2rem;
+  }
+}
+
+.body {
+  background-color: rgb(100, 0, 100);
+  // height: 500px;
+}
+
+.main {
+  min-height: 100vh;
+  // max-height: 99.9vh;
+  // height: 100vh;
+  // height: 500px;
+  // height: 99.9vh;
+  // max-height: 80vh;
+  background-color: rgb(0, 255, 0);
+  // overflow-y: hidden;
+}
+
+.content {
+  background-color: rgb(100, 100, 100);
+}
+
+.footer {
+  font-size: 2em;
+}
+
+.sidebar {
+  background-color: rgb(100, 100, 0);
+}
+
+.box {
+  width: 300px;
+  height: 300px;
+  background-color: rgb(100, 100, 100)
+}
+
+.scrollAreaY {
+  overflow-y: auto;
+}
+
+
+[data-elm-neat-layout] > div {
+  border: solid 2px rgb(174,121,15);
+  border-radius: $default-radius;
+}
