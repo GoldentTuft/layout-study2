@@ -127,8 +127,6 @@ body =
             , Layout.column (List.repeat 100 box)
                 |> setLayout Layout.fill
                 |> setClass "scrollAreaY"
-                |> fromNoGap bodyGap
-                |> setBoundary bodyGap
             ]
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
@@ -147,7 +145,7 @@ view : Model -> View NoGap Msg
 view model =
     Layout.column
         [ menu
-        , body |> setLayout Layout.fill
+        , body |> setLayout Layout.fill -- |> setClass "main"
         , Neat.textBlock "footer" |> setClass "footer"
         ]
         |> setClass "main"
