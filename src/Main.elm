@@ -71,6 +71,21 @@ menu =
         , Layout.rowWith { defaultRow | horizontal = Row.Right, vertical = Row.VCenter }
             [ menuItem "Item2"
             , menuItem "Item3"
+            , Layout.column
+                [ Neat.textBlock "Item444444"
+                , Layout.columnWith { defaultColumn | horizontal = Column.Right }
+                    [ Layout.column
+                        [ Neat.textBlock "menu1"
+                            |> setClass "dropDown_item"
+                        , Neat.textBlock "menu22222222222222222"
+                            |> setClass "dropDown_item"
+                        ]
+                    ]
+                    |> setClass "dropDown_items"
+                ]
+                |> setClass "dropDown"
+                |> fromNoGap menuGap
+            , menuItem "Item5"
             ]
             |> setLayout Layout.fill
         ]
@@ -98,13 +113,6 @@ bodyGap =
         }
 
 
-
--- box : View NoGap msg
--- box =
---     Neat.textBlock "box"
---         |> setClass "box"
-
-
 box : View NoGap msg
 box =
     Neat.textBlock """
@@ -125,9 +133,9 @@ body =
             , Neat.textBlock "hoge"
             , Neat.textBlock "piyo"
             , Layout.column (List.repeat 100 box)
-                |> setLayout Layout.fill
-                |> setClass "scrollAreaY"
             ]
+            |> setLayout Layout.fill
+            |> setClass "scrollAreaY"
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
             |> setLayout (Layout.fillBy 70)
@@ -141,12 +149,53 @@ body =
         |> setClass "body"
 
 
+type TabGap
+    = TabGap
+
+
+tabGap : Neat.IsGap TabGap
+tabGap =
+    Neat.IsGap
+        { width = 0
+        , height = 0.8
+        }
+
+
+tab =
+    Layout.column
+        [ Neat.empty
+            |> fromNoGap tabGap
+            |> setBoundary tabGap
+        , Layout.rowWith { defaultRow | vertical = Row.Bottom }
+            [ tabItem "tab123456789abcdefg" False
+            , tabItem "tab2" True
+            , tabItem "tab3" False
+            , tabItem "tab4abcdefg" False
+            , tabItem "tab5abcdefg" False
+            ]
+            |> setClass "tab"
+        ]
+
+
+tabItem : String -> Bool -> View NoGap msg
+tabItem label sel =
+    Neat.textBlock label
+        |> (if sel then
+                setClass "tab_item__sel"
+
+            else
+                setClass "tab_item"
+           )
+
+
 view : Model -> View NoGap Msg
 view model =
     Layout.column
         [ menu
-        , body |> setLayout Layout.fill -- |> setClass "main"
-        , Neat.textBlock "footer" |> setClass "footer"
+        , tab
+        , body |> setLayout Layout.fill
+        , Neat.textBlock "footer"
+            |> setClass "footer"
         ]
         |> setClass "main"
 
