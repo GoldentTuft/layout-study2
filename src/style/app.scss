@@ -6,6 +6,9 @@
 }
 
 .menu {
+  // overflow-x: auto;
+  // overflow-y: hidden;
+  // z-index: 1000;
   background-color: rgb(255, 0, 255);
 
   &_brand {
@@ -20,8 +23,8 @@
 
 .body {
   background-color: rgb(100, 0, 100);
-  overflow: auto;
-  // height: 500px;
+  // overflow: auto;
+  overflow: hidden;
 }
 
 .main {
@@ -38,6 +41,7 @@
 }
 
 .content {
+  min-width: 320px;
   background-color: rgb(100, 100, 100);
 }
 
@@ -85,30 +89,78 @@
 
 .dropDown {
   position: relative;
+  cursor: pointer;
+  user-select: none;
 
   &_items {
     visibility: hidden;
     position: absolute;
-    top: 100%;
+    z-index: 3000;
     background-color: rgb(200, 200, 200);
   }
 
   &_item {
+    z-index: 3000;
     background-color: rgb(200, 200, 200);
   }
 
+
+}
+
+.childLeft {
+  right: 100%;
+}
+
+.childBottom {
+  top: 100%;
+}
+
+.childRight {
+  left: 100%;
 }
 
 .dropDown:hover .dropDown_items {
   visibility: visible;
 }
 
+.dropDownToggle {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  
+
+  &_items {
+    position: absolute;
+    top: 100%;
+    z-index: 3000;
+    background-color: rgb(200, 200, 200);
+  }
+
+  &_item {
+    z-index: 3000;
+    background-color: rgb(200, 200, 200);
+  }
+
+
+}
+
+// .modal {
+//   background-color: rgba(0, 0, 0, 0.5);
+//   position: fixed;
+//   z-index: 1000;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   cursor: default;
+// }
+
 .scrollAreaY {
   overflow-y: auto;
 }
 
 
-[data-elm-neat-layout] > div {
-  border: solid 2px rgb(174,121,15);
-  border-radius: $default-radius;
-}
+// [data-elm-neat-layout] > div {
+//   border: solid 2px rgb(174,121,15);
+//   border-radius: $default-radius;
+// }

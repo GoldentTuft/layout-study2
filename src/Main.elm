@@ -2,7 +2,9 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html)
+import Html.Attributes
 import Html.Attributes.Classname exposing (classMixinWith)
+import Html.Events
 import Mixin exposing (Mixin)
 import Mixin.Html as Mixin
 import Neat exposing (NoGap, Protected, Renderer, View, defaultRenderer, fromNoGap, setAttribute, setBoundary, setLayout, setMixin, setMixins)
@@ -27,27 +29,29 @@ main =
 
 
 type alias Model =
-    ()
+    { dropDown1Open : Bool }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( ()
+    ( { dropDown1Open = False }
     , Cmd.none
     )
 
 
 type Msg
     = NoOp
+    | ToggleDropDown1
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
-            ( model
-            , Cmd.none
-            )
+            ( model, Cmd.none )
+
+        ToggleDropDown1 ->
+            ( { model | dropDown1Open = not model.dropDown1Open }, Cmd.none )
 
 
 type MenuGap
@@ -62,20 +66,83 @@ menuGap =
         }
 
 
-menu : View NoGap msg
-menu =
+modal : Float -> View NoGap Msg
+modal alpha =
+    Neat.empty
+        |> setStyle "background-color"
+            ("rgba(0, 0, 0, "
+                ++ String.fromFloat alpha
+                ++ ")"
+            )
+        |> setStyle "position" "fixed"
+        |> setStyle "z-index" "1000"
+        |> setStyle "top" "0"
+        |> setStyle "left" "0"
+        |> setStyle "width" "100%"
+        |> setStyle "height" "100%"
+        |> setStyle "cursor" "default"
+
+
+menu : Model -> View NoGap Msg
+menu model =
     Layout.row
         [ Neat.textBlock "Brand"
             |> setClass "menu_brand"
             |> fromNoGap menuGap
-        , Layout.rowWith { defaultRow | horizontal = Row.Right, vertical = Row.VCenter }
+        , Layout.rowWith { defaultRow | horizontal = Row.Right, vertical = Row.VCenter, wrap = Row.Wrap }
             [ menuItem "Item2"
+            , Layout.column
+                [ Neat.textBlock "Item444444"
+                , if model.dropDown1Open then
+                    Layout.columnWith { defaultColumn | horizontal = Column.Right }
+                        [ Layout.column
+                            [ --Neat.empty
+                              --|> setClass "modal"
+                              Neat.textBlock "menu1"
+                                |> setAttribute (Html.Events.onClick NoOp)
+                                |> setClass "dropDownToggle_item"
+                            , Neat.textBlock "menu22222222222222222"
+                                |> setClass "dropDownToggle_item"
+                            , Layout.column
+                                [ Neat.textBlock "Item444444"
+                                , Layout.columnWith { defaultColumn | horizontal = Column.Right }
+                                    [ Layout.column
+                                        [ --Neat.empty
+                                          -- |> setClass "modal"
+                                          Neat.textBlock "menu1"
+                                            |> setClass "dropDown_item"
+                                        , Neat.textBlock "menu22222222222222222"
+                                            |> setClass "dropDown_item"
+                                        ]
+                                    ]
+                                    |> setClass "dropDown_items"
+                                    |> setClass "childRight"
+                                ]
+                                |> setClass "dropDown"
+                                |> setClass "dropDown_item"
+                            , modal 0
+
+                            -- Neat.empty
+                            --     |> setClass "modal"
+                            ]
+                        ]
+                        |> setClass "dropDownToggle_items"
+
+                  else
+                    Neat.none
+                ]
+                -- |> setAttribute (Html.Attributes.tabindex 0)
+                |> setAttribute (Html.Events.onClick ToggleDropDown1)
+                |> setClass "dropDownToggle"
+                |> fromNoGap menuGap
             , menuItem "Item3"
             , Layout.column
                 [ Neat.textBlock "Item444444"
                 , Layout.columnWith { defaultColumn | horizontal = Column.Right }
                     [ Layout.column
-                        [ Neat.textBlock "menu1"
+                        [ --Neat.empty
+                          -- |> setClass "modal"
+                          Neat.textBlock "menu1"
                             |> setClass "dropDown_item"
                         , Neat.textBlock "menu22222222222222222"
                             |> setClass "dropDown_item"
@@ -120,26 +187,39 @@ box =
         """
 
 
+scrollAreaY : List (View NoGap msg) -> View NoGap msg
+scrollAreaY contents =
+    Layout.column
+        [ Layout.rowWith { defaultRow | vertical = Row.Stretch }
+            [ Layout.column
+                contents
+                |> setStyle "position" "absolute"
+                |> setStyle "background-color" "rgb(0, 100, 100)"
+                |> setStyle "height" "100%"
+                |> setStyle "overflow-y" "auto"
+            ]
+            |> setStyle "position" "relative"
+        ]
+
+
 body : View NoGap msg
 body =
-    Layout.row
+    Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Top }
         [ Neat.textBlock "leftSide"
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
             |> setLayout (Layout.fillBy 15)
             |> setClass "sidebar"
-        , Layout.column
+        , scrollAreaY
             [ Neat.textBlock "content"
             , Neat.textBlock "hoge"
             , Neat.textBlock "piyo"
             , Layout.column (List.repeat 100 box)
             ]
-            |> setLayout Layout.fill
-            |> setClass "scrollAreaY"
+            |> setClass "content"
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
             |> setLayout (Layout.fillBy 70)
-            |> setClass "content"
         , Neat.textBlock "rightSide"
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
@@ -191,7 +271,7 @@ tabItem label sel =
 view : Model -> View NoGap Msg
 view model =
     Layout.column
-        [ menu
+        [ menu model
         , tab
         , body |> setLayout Layout.fill
         , Neat.textBlock "footer"
@@ -220,3 +300,13 @@ class =
 setClass : String -> View NoGap msg -> View NoGap msg
 setClass =
     setMixin << class
+
+
+setStyle : String -> String -> View NoGap msg -> View NoGap msg
+setStyle key value =
+    setAttribute (Html.Attributes.style key value)
+
+
+setEvent : Html.Attribute msg -> View NoGap msg -> View NoGap msg
+setEvent msg =
+    setAttribute msg
