@@ -23,8 +23,8 @@
 
 .body {
   background-color: rgb(100, 0, 100);
-  // overflow: auto;
-  overflow: hidden;
+  overflow: auto;
+  // overflow: hidden;
 }
 
 .main {
@@ -41,7 +41,7 @@
 }
 
 .content {
-  min-width: 320px;
+  min-width: 300px;
   background-color: rgb(100, 100, 100);
 }
 
@@ -101,10 +101,15 @@
 
   &_item {
     z-index: 3000;
+    border: solid 2px rgb(174,121,15);
     background-color: rgb(200, 200, 200);
   }
 
 
+}
+
+.dropDown:hover .dropDown_items {
+  visibility: visible;
 }
 
 .childLeft {
@@ -119,30 +124,34 @@
   left: 100%;
 }
 
-.dropDown:hover .dropDown_items {
-  visibility: visible;
-}
+
 
 .dropDownToggle {
   position: relative;
   cursor: pointer;
   user-select: none;
-  
+  // outline: 0;
 
   &_items {
+    visibility: hidden;
     position: absolute;
     top: 100%;
     z-index: 3000;
     background-color: rgb(200, 200, 200);
+
   }
 
   &_item {
     z-index: 3000;
     background-color: rgb(200, 200, 200);
   }
+}
 
+.dropDownToggle:focus .dropDownToggle_items {
+  visibility: visible;
 
 }
+
 
 // .modal {
 //   background-color: rgba(0, 0, 0, 0.5);
@@ -158,7 +167,6 @@
 .scrollAreaY {
   overflow-y: auto;
 }
-
 
 // [data-elm-neat-layout] > div {
 //   border: solid 2px rgb(174,121,15);
