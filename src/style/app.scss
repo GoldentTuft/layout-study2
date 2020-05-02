@@ -23,8 +23,9 @@
 
 .body {
   background-color: rgb(100, 0, 100);
-  overflow: auto;
-  // overflow: hidden;
+  // overflow: auto;
+  overflow: hidden;
+  // max-height: 500px;
 }
 
 .main {
@@ -41,8 +42,13 @@
 }
 
 .content {
-  min-width: 300px;
+  min-width: 400px;
+  max-height: 70vh;
   background-color: rgb(100, 100, 100);
+  // align-self: stretch;
+  overflow-wrap: break-word;
+　　word-wrap: break-word;
+
 }
 
 .footer {
@@ -50,7 +56,9 @@
 }
 
 .sidebar {
+  // min-width: 200px;
   background-color: rgb(100, 100, 0);
+  // align-self:flex-start;
 }
 
 // .box {
@@ -124,8 +132,6 @@
   left: 100%;
 }
 
-
-
 .dropDownToggle {
   position: relative;
   cursor: pointer;
@@ -172,3 +178,10 @@
 //   border: solid 2px rgb(174,121,15);
 //   border-radius: $default-radius;
 // }
+
+@media screen and (max-width: 630px) {
+  .sidebar {
+    // width: 100%;
+    // height: 100px;
+  }
+}

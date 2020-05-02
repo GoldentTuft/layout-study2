@@ -228,7 +228,7 @@ dropDown2 model =
 
 menu : Model -> View NoGap Msg
 menu model =
-    Layout.row
+    Layout.rowWith { defaultRow | vertical = Row.VCenter }
         [ Neat.textBlock "Brand"
             |> setClass "menu_brand"
             |> fromNoGap menuGap
@@ -270,8 +270,16 @@ bodyGap =
         }
 
 
-box : View NoGap msg
-box =
+messageBox1 : View NoGap msg
+messageBox1 =
+    Neat.textBlock
+        """
+        012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    """
+
+
+messageBox2 : View NoGap msg
+messageBox2 =
     Neat.textBlock """
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         """
@@ -292,22 +300,23 @@ scrollAreaY contents =
 
 body : View NoGap msg
 body =
-    Layout.rowWith { defaultRow | wrap = Row.Wrap }
-        --, vertical = Row.Top }
+    Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Stretch }
         [ Layout.column [ Neat.textBlock "leftSide" ]
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
+            |> setLayout (Layout.fillBy 20)
             |> setClass "sidebar"
-        , scrollAreaY
+        , Layout.column
             [ Neat.textBlock "content"
             , Neat.textBlock "hoge"
             , Neat.textBlock "piyo"
-            , Layout.column (List.repeat 100 box)
+            , Layout.column (List.repeat 100 messageBox1 ++ [ messageBox2 ])
             ]
-            |> setClass "content"
             |> fromNoGap bodyGap
             |> setBoundary bodyGap
-            |> setLayout Layout.fill
+            |> setLayout (Layout.fillBy 80)
+            |> setClass "content"
+            |> setClass "scrollAreaY"
         ]
         |> setLayout (Layout.fillBy 80)
         |> setClass "body"
@@ -358,8 +367,9 @@ view model =
         [ menu model
         , tab
         , body |> setLayout Layout.fill
-        , Neat.textBlock "footer"
-            |> setClass "footer"
+
+        -- , Neat.textBlock "footer"
+        --     |> setClass "footer"
         ]
         |> setClass "main"
 
