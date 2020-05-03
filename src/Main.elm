@@ -301,24 +301,26 @@ scrollAreaY contents =
 body : View NoGap msg
 body =
     Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Stretch }
-        [ Layout.column [ Neat.textBlock "leftSide" ]
-            |> fromNoGap bodyGap
-            |> setBoundary bodyGap
-            |> setLayout (Layout.fillBy 20)
+        [ Layout.column
+            [ Neat.textBlock "leftSide"
+            , Neat.textBlock "title1"
+            , Neat.textBlock " title2"
+            ]
             |> setClass "sidebar"
+            |> fromNoGap bodyGap
+            |> setLayout (Layout.fillBy 20)
         , Layout.column
             [ Neat.textBlock "content"
             , Neat.textBlock "hoge"
             , Neat.textBlock "piyo"
-            , Layout.column (List.repeat 100 messageBox1 ++ [ messageBox2 ])
+            , Layout.column ([ messageBox2 ] ++ List.repeat 100 messageBox1 ++ [ messageBox2 ])
             ]
-            |> fromNoGap bodyGap
-            |> setBoundary bodyGap
-            |> setLayout (Layout.fillBy 80)
             |> setClass "content"
             |> setClass "scrollAreaY"
+            |> fromNoGap bodyGap
+            |> setLayout (Layout.fillBy 80)
         ]
-        |> setLayout (Layout.fillBy 80)
+        |> setBoundary bodyGap
         |> setClass "body"
 
 
