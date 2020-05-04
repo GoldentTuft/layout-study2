@@ -13,6 +13,7 @@
     "doc": "elm-doc-preview -p 8001",
     "start": "parcel src/index.html",
     "build": "rimraf docs/ && parcel build src/index.html -d docs/ --public-url ./",
+    "dev": "rimraf dist/ && parcel src/index.html -d dist/ --public-url ./",
     "format": "elm-format src",
     "test": "elm-analyse && elm-format --validate src/"
   },
