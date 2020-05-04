@@ -82,10 +82,6 @@ update msg model =
             ( { model | hoverOpen = False }, Cmd.none )
 
 
-
---Task.attempt (\_ -> NoOp) (Browser.Dom.focus "Brand") )
-
-
 type MenuGap
     = MenuGap
 
@@ -285,24 +281,37 @@ messageBox2 =
         """
 
 
-scrollAreaY : List (View NoGap msg) -> View NoGap msg
-scrollAreaY contents =
-    Layout.column
-        [ Layout.column
-            contents
-            |> setStyle "position" "absolute"
-            |> setStyle "height" "100%"
-            -- |> setStyle "height" "500px"
-            |> setStyle "overflow-y" "auto"
-        ]
-        |> setStyle "position" "relative"
+
+-- type ZeroGap
+--     = ZeroGap
+--
+--
+-- zeroGap : Neat.IsGap ZeroGap
+-- zeroGap =
+--     Neat.IsGap
+--         { width = 0
+--         , height = 0
+--         }
+--
+-- -- scrollAreaY : List (View NoGap msg) -> View NoGap msg
+-- scrollAreaY contents =
+--     Neat.lift Html.div
+--         [ -- Mixin.fromAttribute <| Html.Attributes.style "position" "relative"
+--           Mixin.fromAttribute <| Html.Attributes.style "overflow" "hidden"
+--         ]
+--         [ Neat.lift Html.div
+--             [-- Mixin.fromAttribute <| Html.Attributes.style "position" "absolute"
+--             ]
+--             contents
+--             |> setClass "scrollAreaY"
+--         ]
 
 
 body : View NoGap msg
 body =
-    Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Stretch }
+    Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Top }
         [ Layout.column
-            [ Neat.textBlock "leftSide"
+            [ Neat.textBlock "leftSidePanel"
             , Neat.textBlock "title1"
             , Neat.textBlock " title2"
             ]
@@ -369,9 +378,6 @@ view model =
         [ menu model
         , tab
         , body |> setLayout Layout.fill
-
-        -- , Neat.textBlock "footer"
-        --     |> setClass "footer"
         ]
         |> setClass "main"
 

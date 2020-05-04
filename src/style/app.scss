@@ -6,9 +6,6 @@
 }
 
 .menu {
-  // overflow-x: auto;
-  // overflow-y: hidden;
-  // z-index: 1000;
   background-color: rgb(255, 0, 255);
 
   &_brand {
@@ -23,34 +20,21 @@
 
 .body {
   background-color: rgb(100, 0, 100);
-  // overflow: auto;
-  overflow: hidden;
-  // max-height: 500px;
+  // overflow: hidden;
 }
 
 .main {
-  // min-height: 99vh;
-  // max-height: 99.8vh;
-  // position: fixed;
   height: 100vh;
-  // width: 100vw;
-  // height: 500px;
-  // height: 99.9vh;
-  // max-height: 80vh;
   background-color: rgb(0, 255, 0);
-  overflow-y: hidden;
-  // overflow: auto;
+  // overflow: hidden;
 }
 
 .content {
   min-width: 80vw;
   max-height: 80vh;
-  // max-width: 100%;
-  // max-height: 100%;
   background-color: rgb(100, 100, 100);
-  // align-self: stretch;
-  word-break: break-word;
-
+  // word-break: break-word;
+  word-break: break-all;
 }
 
 .footer {
@@ -58,16 +42,8 @@
 }
 
 .sidebar {
-  // min-width: 200px;
   background-color: rgb(100, 100, 0);
-  // align-self:flex-start;
 }
-
-// .box {
-//   width: 300px;
-//   height: 300px;
-//   background-color: rgb(100, 100, 100)
-// }
 
 .border {
   border: solid 1px rgba(0, 0, 0, 0.3);
@@ -118,8 +94,6 @@
     border: solid 2px rgb(174,121,15);
     background-color: rgb(200, 200, 200);
   }
-
-
 }
 
 .dropDown:hover .dropDown_items {
@@ -142,7 +116,7 @@
   position: relative;
   cursor: pointer;
   user-select: none;
-  // outline: 0;
+  outline: 0;
 
   &_items {
     visibility: hidden;
@@ -150,7 +124,6 @@
     top: 100%;
     z-index: 3000;
     background-color: rgb(200, 200, 200);
-
   }
 
   &_item {
@@ -164,20 +137,12 @@
 
 }
 
-
-// .modal {
-//   background-color: rgba(0, 0, 0, 0.5);
-//   position: fixed;
-//   z-index: 1000;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   cursor: default;
-// }
-
 .scrollAreaY {
   overflow-y: auto;
+}
+
+.noScrollAreaY {
+  overflow-y: hidden;
 }
 
 // [data-elm-neat-layout] > div {
