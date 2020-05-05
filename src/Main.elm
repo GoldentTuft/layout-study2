@@ -226,8 +226,11 @@ menu : Model -> View NoGap Msg
 menu model =
     Layout.rowWith { defaultRow | vertical = Row.VCenter }
         [ Neat.textBlock "Brand"
+            |> setLayout Layout.fill
             |> setClass "menu_brand"
+            |> setLayout Layout.fill
             |> fromNoGap menuGap
+            |> setLayout Layout.fill
         , Layout.rowWith { defaultRow | horizontal = Row.Right, vertical = Row.VCenter, wrap = Row.Wrap }
             [ dropDown1 model
                 |> fromNoGap menuGap
@@ -309,6 +312,7 @@ messageBox2 =
 
 body : View NoGap msg
 body =
+    --改行させず、.content {max-height: 80vh;}を消し、.body {overflow: hidden;}をセットでよさそう。
     Layout.rowWith { defaultRow | wrap = Row.Wrap, vertical = Row.Top }
         [ Layout.column
             [ Neat.textBlock "leftSidePanel"
@@ -324,8 +328,8 @@ body =
             , Neat.textBlock "piyo"
             , Layout.column ([ messageBox2 ] ++ List.repeat 100 messageBox1 ++ [ messageBox2 ])
             ]
-            |> setClass "content"
             |> setClass "scrollAreaY"
+            |> setClass "content"
             |> fromNoGap bodyGap
             |> setLayout (Layout.fillBy 80)
         ]
